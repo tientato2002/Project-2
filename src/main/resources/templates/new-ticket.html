@@ -1,0 +1,45 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Create-person</title>
+</head>
+<body>
+	<form th:action="@{/ticket/new}" method ="post" 
+	th:object="${ticket}">
+		
+		<div>
+			<label>client Name</label>
+			<input type="text" th:field="*{clientName}" />
+		</div>
+		
+		<div>
+			<label>client Phone</label>
+			<input type="text" th:field="*{clientPhone}" />
+		</div>
+		
+		<div>
+			<label>Content</label>
+			<textarea rows="4" cols="50" th:field="*{content}"></textarea>
+		</div>
+		
+		<div>
+			<label>Status</label>
+			<input type="checkbox" name="status" th:checked="${ticket.status}" />
+		</div>
+		
+		<div>
+			<label>Process Date</label>
+			<input type="date" th:field="*{processDate}" />
+		</div>
+		
+		<div>
+			<label>Department:</label>
+			<select name="department.id">
+				<option th:each="d : ${departmentList}" th:value="${d.id}" th:text="${d.name}"></option>
+			</select>
+		</div>
+		
+		<button type="submit">Save</button>
+	</form>
+</body>
+</html>

@@ -1,0 +1,21 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Create-department</title>
+</head>
+<body>
+	<form th:action="@{/department/edit}" method ="post">
+		<div>
+			<label>ID:</label>
+			<input readonly type="number" name="id" th:value="${department.id}"/>
+		</div>
+		
+		<div>
+			<label>Name:</label>
+			<input  type="text" name="name" th:value="${department.name}"/>
+		</div>
+				
+		<button type="submit">Save Edit</button>
+	</form>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<html layout:decorate="/template.html">
+<body>
+
+<!--  -->
+<div layout:fragment="content">
+<h1>List User</h1>
+<a th:href="@{/user/new}">New User</a>
+
+<form th:action="@{/user/search}" method="get" th:object="${searchDTO}">
+	<input th:field="*{keyword}" placeholder="Tim ten.." />
+	<p th:errors="*{keyword}"></p>
+
+	<input th:field="*{curentPage}" placeholder="Trang hien tai.." /> 
+	<input th:field="*{size}" placeholder="So luong ban ghi / trang" /> 
+	<input name="sortedField" placeholder="Sap xep theo thuoc tinh ..."
+		th:value="${searchDTO?.sortedField}" />
+	<button type="submit">Search</button>
+</form>
+
+<table border="2">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>Age</th>
+			<th>Avatar</th>
+			<th>Department</th>
+			<th>Birth Date</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<!-- Lap -->
+		<tr th:each="u : ${userList}">
+			<td th:text="${u.id}"></td>
+			<td th:text="${u.name}"></td>
+			<td th:text="${u.age}"></td>
+			<td><img th:src="@{'/user/download?filename=' + ${u.avatarURL}}"
+				style="width: 20px;" /></td>
+				
+			<td th:text="${u.department?.name}"></td>
+			<td th:text="${#dates.format(u.birthdate,'dd/MM/yyyy')}"></td>
+			<td><a th:href="@{'/user/delete?id=' + ${u.id} }"
+				onclick="return confirm('Bạn có chắc chắn muốn xóa?')"> Delete
+			</a> <a th:href="@{'/user/edit?id=' + ${u.id} }"
+				onclick="return confirm('Bạn có chắc chắn muốn xóa?')"> Edit </a></td>
+		</tr>
+	</tbody>
+
+</table>
+
+<label>Tong so Page:</label>
+<span th:text="${totalPage}"></span>
+<label>Tong so phan tu:</label><br/>
+<span th:text="${totalElement}"></span>
+
+</div>
+</body>
+</html>

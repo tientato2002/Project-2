@@ -1,0 +1,38 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Create-person</title>
+</head>
+<body>
+	<form th:action="@{/user/new}" method ="post" 
+	enctype="multipart/form-data" th:object="${user}">
+		<div>
+			<label th:text="#{user.avatar.file}"></label>
+			<input type="file" accept="image/*" name="file" />
+		</div>
+		<div>
+			<label th:text="#{user.name}"></label>
+			<input type="text" th:field="*{name}" />
+			<p th:errors="*{name}"></p>
+		</div>
+		
+		<div>
+			<label th:text="#{user.age}"></label>
+			<input type="text" th:field="*{age}" />
+			<p th:errors="*{age}"></p>
+		</div>
+		<div>
+			<label>Department:</label>
+			<select name="department.id">
+				<option th:each="d : ${departmentList}" th:value="${d.id}" th:text="${d.name}"></option>
+			</select>
+		</div>
+		<div>
+			<label>Birth Date:</label>
+			<input type="date" name="birthdate">
+		</div>
+		
+		<button type="submit">Save</button>
+	</form>
+</body>
+</html>

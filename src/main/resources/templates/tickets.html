@@ -1,0 +1,65 @@
+<html layout:decorate="/template.html">
+<body>
+
+<!--  -->
+<div layout:fragment="content">
+<h1>List Ticket</h1>
+<a th:href="@{/ticket/new}">New Ticket</a>
+
+<form th:action="@{/ticket/search}" method="get" th:object="${searchDTO}">
+	<input th:field="*{keyword}" placeholder="Tim ten.." />
+	<p th:errors="*{keyword}"></p>
+
+	<input th:field="*{curentPage}" placeholder="Trang hien tai.." /> 
+	<input th:field="*{size}" placeholder="So luong ban ghi / trang" /> 
+	<input name="sortedField" placeholder="Sap xep theo thuoc tinh ..."
+		th:value="${searchDTO?.sortedField}" />
+	<button type="submit">Search</button>
+</form>
+
+<table border="2">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>client Name</th>
+			<th>client Phone</th>
+			<th>Content</th>
+			<th>Status</th>
+			<th>Created At</th>
+			<th>Department</th>
+			<th>Process Date</th>
+			<th>Action</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		<!-- Lap -->
+		<tr th:each="u : ${ticketList}">
+			<td th:text="${u.id}"></td>
+			<td th:text="${u.clientName}"></td>
+			<td th:text="${u.clientPhone}"></td>
+			<td th:text="${u.content}"></td>
+			<td>
+				<input type="checkbox" th:checked="${u.status}"/>
+			</td>
+			
+			<td th:text="${#dates.format(u.createdAt,'dd/MM/yyyy')}"></td>
+			<td th:text="${u.department?.name}"></td>
+			<td th:text="${#dates.format(u.processDate,'dd/MM/yyyy')}"></td>
+			<td><a th:href="@{'/ticket/delete?id=' + ${u.id} }"
+				onclick="return confirm('Bạn có chắc chắn muốn xóa?')"> Delete
+			</a> <a th:href="@{'/ticket/edit?id=' + ${u.id} }"
+				onclick="return confirm('Bạn có chắc chắn muốn xóa?')"> Edit </a></td>
+		</tr>
+	</tbody>
+
+</table>
+
+<label>Tong so Page:</label>
+<span th:text="${totalPage}"></span>
+<label>Tong so phan tu:</label><br/>
+<span th:text="${totalElement}"></span>
+
+</div>
+</body>
+</html>

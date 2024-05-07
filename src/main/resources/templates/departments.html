@@ -1,0 +1,61 @@
+
+
+<html layout:decorate="/template.html">
+
+<body>
+	<div layout:fragment="content">
+		<h1>List Department</h1>
+		<a th:href="@{/department/new}">New Department</a>
+
+		<form th:action="@{/department/search}" method="get"
+			th:object="${searchDTO}">
+			<input th:field="*{keyword}" placeholder="Tim ten.." />
+			<p th:errors="*{keyword}"></p>
+
+			<input th:field="*{curentPage}" placeholder="Trang hien tai.." /> 
+			<input
+				th:field="*{size}" placeholder="So luong ban ghi / trang" /> 
+			<input
+				name="sortedField" placeholder="Sap xep theo thuoc tinh ..."
+				th:value="${searchDTO?.sortedField}" />
+
+			<button type="submit">Search</button>
+		</form>
+
+
+		<table border="2">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Created At</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<!-- Lap -->
+				<tr th:each="d : ${departmentList}">
+					<td th:text="${d.id}"></td>
+					<td th:text="${d.name}"></td>
+					<td th:text="${#dates.format(d.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+					<td>
+						<a th:href="@{'/department/delete?id=' + ${d.id} }"
+						onclick="return confirm('Bạn có chắc chắn muốn xóa?')"> 
+						Delete
+						</a> 
+						<a th:href="@{'/department/edit?id=' + ${d.id} }"
+						onclick="return confirm('Bạn có chắc chắn muốn sua?')"> 
+						Edit 
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+
+		<label>Tong so Page:</label> <span th:text="${totalPage}"></span> <label>Tong
+			so phan tu:</label><br /> <span th:text="${totalElement}"></span>
+	</div>
+</body>
+
+</html>
